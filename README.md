@@ -10,7 +10,7 @@ The application is built using **React Native**, **Expo**, **Firebase**, and **O
 
 Cafe Hop is designed to provide an interactive café discovery experience through maps, reviews, ratings,friend and community feedback.
 
-The app detects the user’s live location and displays nearby cafés on an interactive map. Users can open café details, write reviews, view ratings, and explore popular menu items mentioned by other users.
+The app detects the user’s live location and displays nearby cafés on an interactive map. Users can open navigation and directions for selected cafés from their current location. Users can open café details, write reviews, view ratings, and explore popular menu items mentioned by other users.
 
 The project combines:
 - mobile app development
@@ -29,6 +29,7 @@ The main objective of the project is to help users:
 
 - discover cafés around them
 - view café details easily
+- Users can open navigation and directions for selected cafés from the current location
 - explore reviews from other users
 - share their own experiences
 - identify popular menu items through community reviews
@@ -57,6 +58,7 @@ The main objective of the project is to help users:
 - Interactive café map interface
 - Zoom in / zoom out support
 - Tap-based location interaction
+- Navigation and route support through map integration
 
 ---
 
@@ -64,7 +66,7 @@ The main objective of the project is to help users:
 - Detects nearby cafés around selected location
 - Displays cafés as markers on the map
 - Uses OpenStreetMap and Overpass API
-
+- Users can open navigation and directions for selected cafés
 ---
 
 ## 📄 Café Details Screen
@@ -139,6 +141,7 @@ Nearby cafés are fetched using:
 
 ## Step 5 — Display Café Markers
 Cafés are shown as markers on the map.
+Users can open navigation and directions for selected cafés from the current location.
 
 ---
 
