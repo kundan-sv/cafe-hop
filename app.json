@@ -1,6 +1,5 @@
 {
   "expo": {
-    "assets": ["./assets/fonts/"],
     "name": "Cafe Hop",
     "slug": "cafe-hop",
     "version": "1.0.0",
@@ -17,8 +16,19 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.kundan.cafehop"
     },
+    "android": {
+      "package": "com.kundan.cafehop"
+    },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "43bb6347-f64f-4e17-9063-6953db827179"
+      }
+    },
+    "plugins": [
+      "expo-asset"
+    ]
   }
 }
