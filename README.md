@@ -142,20 +142,22 @@ Cafés are shown as markers on the map.
 
 ---
 
-## Step 6 — Open Café Details
+## Step 6 — Connecting Friends
+user can connect friends:
+- when they search their friend's email,it will show their account
+- for this,that friend also have to sign up through their email 
+- in that way user can connect friends
+
+---
+
+## Step 7 — Open Café Details
 When the user taps a café marker:
 - café details screen opens
 - reviews and menu sections become visible
 
 ---
 
-## Step 7 — Connecting Friends
-user can connect friends:
-- when they search their friend's email,it will show their account
-- for this,that friend also have to sign up through their email 
-- in that way user can connect friends 
-
-## Step 7 — Write and Read Reviews
+## Step 8 — Write and Read Reviews
 Users can:
 - submit reviews
 - give ratings
@@ -164,7 +166,7 @@ Users can:
 
 ---
 
-## Step 8 — Popular Menu Detection
+## Step 9 — Popular Menu Detection
 Review text is analyzed to detect frequently mentioned menu items.
 
 ---
