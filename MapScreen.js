@@ -4,7 +4,6 @@ import { View, Text, Image, TouchableOpacity, StyleSheet, ActivityIndicator } fr
 import MapView, { Marker, Callout } from 'react-native-maps';
 import customMarker from './assets/custom_marker.png';
 import { colors, globalStyles } from './globalStyles';
-import arrowImg from './assets/arrow.png';
 
 export default function MapScreen({ navigation }) {
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -193,7 +192,6 @@ export default function MapScreen({ navigation }) {
               <View style={styles.calloutContainer}>
                 <Text style={globalStyles.calloutTitle}>{cafe.name}</Text>
                 <Text style={globalStyles.calloutAddress}>{cafe.vicinity}</Text>
-                <Image source={arrowImg} style={globalStyles.calloutArrow} />
               </View>
             </Callout>
           </Marker>

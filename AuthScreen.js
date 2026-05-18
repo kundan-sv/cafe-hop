@@ -88,7 +88,7 @@ const profilePic = `profile_${randomColor}.png`;
       <Image source={require("./assets/profile.png")} style={styles.logo} />
 
       <View style={{ alignItems: "center", marginBottom: 20 }}>
-        <Text style={globalStyles.title}>Cafe Hop Girlies</Text>
+        <Text style={globalStyles.title}>Cafe Hop</Text>
       </View>
 
       {!isLogin && (
