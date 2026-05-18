@@ -230,7 +230,7 @@ Review text is analyzed to detect frequently mentioned menu items.
 
 ## Authentication Screen
 
-<img width="328" height="739" alt="image" src="https://github.com/user-attachments/assets/10714ef7-5c90-43da-be24-9f5757e7ca1d" />
+<img width="329" height="736" alt="image" src="https://github.com/user-attachments/assets/848f5676-10ec-4b24-b7fc-b81b7804de33" />
 
 ---
 
