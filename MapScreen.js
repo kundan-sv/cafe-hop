@@ -154,6 +154,7 @@ export default function MapScreen({ navigation }) {
   return (
     <View style={styles.map}>
       <MapView
+        provider={null}
         ref={mapRef}
         style={styles.map}
         region={region}
