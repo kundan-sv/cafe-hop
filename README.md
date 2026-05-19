@@ -293,6 +293,13 @@ npx expo start
 
 ---
 
+# 📱 APK Download
+
+Download the Android APK here:
+
+https://expo.dev/accounts/kundan-sv/projects/cafe-hop/builds/91b82e9a-e634-4f75-92e7-62c6f9990db8
+
+---
 # 📂 Project Structure
 
 ```text
