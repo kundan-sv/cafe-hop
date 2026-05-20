@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/icon.png" width="90" />
+  <img src="assets/icon.png" width="110" />
 </p>
 
 <h1 align="center">Cafe Hop</h1>
