@@ -114,7 +114,7 @@ The app detects frequently mentioned menu items from reviews such as:
 
 ## App Logo
 
-<img width="1024" height="1024" alt="image" src="https://github.com/user-attachments/assets/b24cf0c8-fdd5-4cc7-8dd8-14fc60c0ea65" />
+<img src="assets/icon.png" width="80" />
 
 ---
 ## Authentication Screen
