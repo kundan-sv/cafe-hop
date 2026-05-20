@@ -150,7 +150,7 @@ The app detects frequently mentioned menu items from reviews such as:
 
 ⚠️ Android APK — install on Android devices only.
 
-https://github.com/kundan-sv/cafe-hop/releases/download/v1.0.0/application-b7956aaa-e82d-49d6-93f3-4ab3c723fd75.apk
+[Download Cafe Hop APK](https://github.com/kundan-sv/cafe-hop/releases/download/v1.0.0/application-b7956aaa-e82d-49d6-93f3-4ab3c723fd75.apk)
 
 ---
 
