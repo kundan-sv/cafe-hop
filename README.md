@@ -5,18 +5,12 @@
 <h1 align="center">Cafe Hop</h1>
 
 <p align="center">
-  Location-based café discovery mobile application built with React Native, Firebase, and OpenStreetMap.
+  Cafe Hop is a location-based café discovery mobile application built with React Native, Expo, Firebase, OpenStreetMap, and Overpass API.
 </p>
 
 <p align="center">
-  Discover nearby cafés, explore reviews, connect with friends, and navigate seamlessly through an interactive café discovery experience.
+  Discover nearby cafés, explore café details, read trusted reviews, connect with friends, and navigate seamlessly through an interactive café discovery experience.
 </p>
-
----
-
-Cafe Hop is a location-based mobile application that helps users discover nearby cafés, explore café details, read trusted reviews, and connect with friends.
-
-Built using React Native, Expo, Firebase, OpenStreetMap, and Overpass API.
 
 ---
 
