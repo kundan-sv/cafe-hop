@@ -1,205 +1,80 @@
 # ☕ Cafe Hop
 
-Cafe Hop is a location-based mobile application that helps users discover nearby cafés, explore café details, and share reviews with the community and can see friend reviews directly who are connected to you.
+Cafe Hop is a location-based mobile application that helps users discover nearby cafés, explore café details, read trusted reviews, and connect with friends through an interactive café discovery experience.
 
-The application is built using **React Native**, **Expo**, **Firebase**, and **OpenStreetMap**.
-
----
-
-# 📌 About the Project
-
-Cafe Hop is designed to provide an interactive café discovery experience through maps, reviews, ratings,friend and community feedback.
-
-The app detects the user’s live location and displays nearby cafés on an interactive map. Users can open navigation and directions for selected cafés from their current location. Users can open café details, write reviews, view ratings, and explore popular menu items mentioned by other users.
-
-The project combines:
-- mobile app development
-- authentication systems
-- location services
-- map integration
-- cloud database integration
-- community review systems
-- Friend reviews 
-
----
-
-# 🎯 Main Objective
-
-The main objective of the project is to help users:
-
-- discover cafés around them
-- view café details easily
-- Users can open navigation and directions for selected cafés from the current location
-- explore reviews from other users
-- share their own experiences
-- identify popular menu items through community reviews
-- you can connect friends 
-- you can trust reviews from your connected friends feedback through friends review section
+Built using React Native, Expo, Firebase, OpenStreetMap, and Overpass API.
 
 ---
 
 # ✨ Features
 
-## 🔐 Authentication System
-- User Signup
-- User Login
-- Firebase Authentication Integration
+## 🔐 Authentication
+- User Signup & Login
+- Firebase Authentication integration
 
 ---
 
 ## 📍 Live Location Access
-- Requests location permission
-- Detects user’s current location
-- Displays live location on map
+- Detects user's current location
+- Real-time nearby café discovery
 
 ---
 
-## 🗺 Interactive Map
-- Interactive café map interface
-- Zoom in / zoom out support
-- Tap-based location interaction
-- Navigation and route support through map integration
+## 🗺 Interactive Café Map
+- OpenStreetMap powered map
+- Custom café markers
+- Tap-to-explore interaction
+- Live café loading based on selected location
 
 ---
 
-## ☕ Nearby Café Discovery
-- Detects nearby cafés around selected location
-- Displays cafés as markers on the map
-- Uses OpenStreetMap and Overpass API
-- Users can open navigation and directions for selected cafés
----
-
-## 📄 Café Details Screen
-When a café marker is selected:
-- café details screen opens
-- café name is displayed
-- café address/location is displayed
-- users can explore reviews and menu information
+## 🧭 Directions Support
+- Open navigation directly in Google Maps
+- Route support from current location
 
 ---
 
-## 📝 Community Review System
+## ☕ Café Details
+- Café information screen
+- Community reviews
+- Friend reviews
+- Popular menu section
+
+---
+
+## 📝 Review System
 Users can:
 - write reviews
-- give ratings
-- read reviews from other users and friends 
+- give star ratings
+- read community feedback
+- view trusted friend reviews
 
 Reviews are stored using Firebase Firestore.
 
 ---
 
-## ⭐ Rating System
-- Star rating support
-- User ratings displayed inside reviews
-- Average app review rating shown
+## 👥 Friend System
+- Search friends by email
+- Connect with other users
+- View reviews from connected friends
 
 ---
 
 ## 🍰 Popular Menu Detection
-The app analyzes review text and identifies frequently mentioned menu items such as:
-- coffee
-- latte
-- tiramisu
-- matcha
-- cake
-- sandwich
-
-Popular items are displayed inside the Popular Menu section.
+The app detects frequently mentioned menu items from reviews such as:
+- Matcha
+- Latte
+- Tiramisu
+- Coffee
+- Sandwich
+- Cake
 
 ---
 
 ## 🎨 UI Design
-- Pixel-themed interface
-- Custom icons and markers
-- Mobile-friendly layout
-
----
-
-# 🧭 How the App Works
-
-## Step 1 — User Authentication
-The user signs up or logs into the app.
-
----
-
-## Step 2 — Location Permission
-The app requests location permission from the user.
-
----
-
-## Step 3 — Detect User Location
-The application detects the user’s live location.
-
----
-
-## Step 4 — Fetch Nearby Cafés
-Nearby cafés are fetched using:
-- OpenStreetMap
-- Overpass API
-
----
-
-## Step 5 — Display Café Markers
-Cafés are shown as markers on the map.
-Users can open navigation and directions for selected cafés from the current location.
-
----
-
-## Step 6 — Connecting Friends
-user can connect friends:
-- when they search their friend's email,it will show their account
-- for this,that friend also have to sign up through their email 
-- in that way user can connect friends
-
----
-
-## Step 7 — Open Café Details
-When the user taps a café marker:
-- café details screen opens
-- reviews and menu sections become visible
-
----
-
-## Step 8 — Write and Read Reviews
-Users can:
-- submit reviews
-- give ratings
-- read community reviews
-- read connected friend reviews
-
----
-
-## Step 9 — Popular Menu Detection
-Review text is analyzed to detect frequently mentioned menu items.
-
----
-
-# 📱 Screens Included
-
-## 🔐 Authentication Screen
-- Signup
-- Login
-
----
-
-## 🗺 Map Screen
-- Interactive map
-- Café markers
-- User location
-
----
-
-## ☕ Café Details Screen
-- Café information
-- Ratings
-- Community reviews
-- Popular menu
-
----
-
-## 📝 connecting friends
-- search email
-- connect friends
+- Pixel-inspired café theme
+- Custom markers and icons
+- Mobile-friendly interface
 
 ---
 
@@ -219,87 +94,70 @@ Review text is analyzed to detect frequently mentioned menu items.
 ---
 
 ## Maps & Location
-- React Native Maps
-- Expo Location
 - OpenStreetMap
 - Overpass API
+- Expo Location
+- React Native WebView
+- Leaflet.js
 
 ---
 
 # 📸 Screenshots
 
+## App Logo
+
+<img width="1024" height="1024" alt="image" src="https://github.com/user-attachments/assets/b24cf0c8-fdd5-4cc7-8dd8-14fc60c0ea65" />
+
+---
 ## Authentication Screen
 
-<img width="329" height="736" alt="image" src="https://github.com/user-attachments/assets/848f5676-10ec-4b24-b7fc-b81b7804de33" />
+<img width="330" height="705" alt="image" src="https://github.com/user-attachments/assets/19321644-1eb8-47bc-b10f-82aa52aedac9" />
 
 ---
 
 ## Map Screen
 
-<img width="330" height="736" alt="Map Screen" src="https://github.com/user-attachments/assets/284ba1ea-0f4c-4547-a0ec-33cf30573cf5" />
+<img width="329" height="702" alt="image" src="https://github.com/user-attachments/assets/165e5b36-257d-42c8-8462-e2acf8a1a576" />
 
 ---
 
 ## Café Details Screen
 
-<img width="331" height="736" alt="Cafe Details Screen" src="https://github.com/user-attachments/assets/a2bf5c63-3250-4c40-ba36-923e01634a8b" />
+<img width="331" height="704" alt="image" src="https://github.com/user-attachments/assets/10b82052-6fe0-40e4-9ded-2ba335ef0f09" />
 
 ---
 
-## connecting friends
+## Directions popup
 
-<img width="330" height="737" alt="Review Screen" src="https://github.com/user-attachments/assets/c42ec756-8865-434f-80f8-ca0909828196" />
+<img width="332" height="739" alt="image" src="https://github.com/user-attachments/assets/0261ba25-eb77-4574-ad50-83ba4c996476" />
+
+---
+## Friends Screen
+
+<img width="331" height="702" alt="image" src="https://github.com/user-attachments/assets/b275ecce-9c4d-434d-8443-edfccc188256" />
 
 ---
 
-# 🚀 How to Run the Project
+# 🚀 APK Download
 
-## 1. Clone Repository
+https://github.com/kundan-sv/cafe-hop/releases/download/v1.0.0/application-b7956aaa-e82d-49d6-93f3-4ab3c723fd75.apk
+
+---
+
+# 🚀 Run Locally
 
 ```bash
 git clone https://github.com/kundan-sv/cafe-hop.git
-```
 
----
-
-## 2. Open Project Folder
-
-```bash
 cd cafe-hop
-```
 
----
-
-## 3. Install Dependencies
-
-```bash
 npm install
-```
 
----
-
-## 4. Start Expo
-
-```bash
 npx expo start
 ```
 
 ---
 
-## 5. Run on Mobile
-
-- Install Expo Go
-- Scan the QR code generated by Expo
-
----
-
-# 📱 APK Download
-
-Download the Android APK here:
-
-https://expo.dev/accounts/kundan-sv/projects/cafe-hop/builds/91b82e9a-e634-4f75-92e7-62c6f9990db8
-
----
 # 📂 Project Structure
 
 ```text
@@ -319,13 +177,15 @@ globalStyles.js
 
 # 🌟 Future Improvements
 
-- Café search functionality
-- Better filtering system
+- Café search & filtering
 - Save favourite cafés
 - Upload images in reviews
 - AI-based recommendations
 - Dark mode
-- Improved café data coverage
+- Improved café database coverage
+- Include Direct reviews and ratings from Google
+- Google Reviews & Ratings integration
+- Direct Google Maps review synchronization
 
 ---
 
@@ -340,4 +200,4 @@ https://github.com/kundan-sv
 
 # 📄 License
 
-This project is created for educational, learning, mobile application development experience.
+This project was created for educational and learning purposes.
