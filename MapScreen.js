@@ -1,24 +1,24 @@
 import * as Location from 'expo-location';
 import React, { useEffect, useState, useRef } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
-import MapView, { Marker, Callout } from 'react-native-maps';
-import customMarker from './assets/custom_marker.png';
+import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, Linking } from 'react-native';
+import { WebView } from 'react-native-webview';
 import { colors, globalStyles } from './globalStyles';
+
 
 export default function MapScreen({ navigation }) {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [cafes, setCafes] = useState([]);
   const [errorMsg, setErrorMsg] = useState(null);
   const [region, setRegion] = useState(null);
-  const [loadingMore, setLoadingMore] = useState(false);
-  const mapRef = useRef(null);
+  const [loading, setLoading] = useState(false);
+  const webViewRef = useRef(null);
 
   const radius = 1500;
 
   const fetchNearbyCafes = async (latitude, longitude) => {
     try {
       setErrorMsg(null);
-      setLoadingMore(true);
+      setLoading(true);
 
       const query = `
         [out:json][timeout:25];
@@ -30,18 +30,16 @@ export default function MapScreen({ navigation }) {
         out center tags;
       `;
 
-      const response = await fetch("https://overpass.kumi.systems/api/interpreter", {
-        method: "POST",
+      const response = await fetch('https://overpass.kumi.systems/api/interpreter', {
+        method: 'POST',
         headers: {
-          "Content-Type": "text/plain",
-          "Accept": "application/json",
+          'Content-Type': 'text/plain',
+          Accept: 'application/json',
         },
         body: query,
       });
 
       const text = await response.text();
-      console.log(text);
-
       const data = JSON.parse(text);
 
       const formattedCafes = data.elements
@@ -73,13 +71,13 @@ export default function MapScreen({ navigation }) {
         setCafes(formattedCafes);
         setErrorMsg(null);
       } else {
-        setErrorMsg('No cafes found nearby. Showing previous cafes.');
+        setErrorMsg('No cafes found nearby. Try another location.');
       }
     } catch (error) {
       console.log('Cafe fetch error:', error.message);
       setErrorMsg('Trying to load cafes... tap another location if it takes long.');
-    }finally {
-      setLoadingMore(false);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -96,19 +94,16 @@ export default function MapScreen({ navigation }) {
         }
 
         const loc = await Location.getCurrentPositionAsync({});
+        const coords = loc.coords;
 
         if (isMounted) {
-          const coords = loc.coords;
-
-          setSelectedLocation(coords);
-
-          setRegion({
+          const initialLocation = {
             latitude: coords.latitude,
             longitude: coords.longitude,
-            latitudeDelta: 0.02,
-            longitudeDelta: 0.02,
-          });
+          };
 
+          setSelectedLocation(initialLocation);
+          setRegion(initialLocation);
           fetchNearbyCafes(coords.latitude, coords.longitude);
         }
       } catch (error) {
@@ -123,81 +118,170 @@ export default function MapScreen({ navigation }) {
     };
   }, []);
 
+  const openCafeDetails = (cafe) => {
+    navigation.navigate('CafeDetails', { cafe });
+  };
 
+  const generateMapHtml = () => {
+    const lat = selectedLocation?.latitude || region?.latitude || 16.5062;
+    const lng = selectedLocation?.longitude || region?.longitude || 80.6480;
 
-  const zoom = (type) => {
-    if (!region) return;
+    const cafesJson = JSON.stringify(cafes);
 
-    const factor = type === 'in' ? 0.5 : 2;
+    return `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          />
+          <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-    const newRegion = {
-      ...region,
-      latitudeDelta: Math.min(Math.max(region.latitudeDelta * factor, 0.002), 1),
-      longitudeDelta: Math.min(Math.max(region.longitudeDelta * factor, 0.002), 1),
-    };
+          <style>
+            html, body, #map {
+              height: 100%;
+              width: 100%;
+              margin: 0;
+              padding: 0;
+            }
 
-    setRegion(newRegion);
+            .popup-btn {
+              background: #8B5E3C;
+              color: white;
+              border: none;
+              padding: 8px 10px;
+              border-radius: 8px;
+              font-weight: bold;
+              margin-top: 6px;
+            }
+          </style>
+        </head>
 
-    if (mapRef.current) {
-      mapRef.current.animateToRegion(newRegion, 300);
+        <body>
+          <div id="map"></div>
+
+          <script>
+            const userLat = ${lat};
+            const userLng = ${lng};
+            const cafes = ${cafesJson};
+
+            const map = L.map('map').setView([userLat, userLng], 15);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              maxZoom: 19,
+              attribution: '© OpenStreetMap'
+            }).addTo(map);
+
+            const userIcon = L.divIcon({
+              html: '<div style="width:18px;height:18px;background:#2478ff;border-radius:50%;border:3px solid white;"></div>',
+              className: '',
+              iconSize: [24, 24],
+              iconAnchor: [12, 12]
+            });
+
+            L.marker([userLat, userLng], { icon: userIcon })
+              .addTo(map)
+              .bindPopup('Selected Location');
+
+            cafes.forEach((cafe, index) => {
+              const cafeLat = cafe.geometry.location.lat;
+              const cafeLng = cafe.geometry.location.lng;
+
+              const cafeIcon = L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/kundan-sv/cafe-hop/main/assets/custom_marker.png',
+                iconSize: [38, 38],
+                iconAnchor: [19, 38],
+                popupAnchor: [0, -38]
+              });
+
+              const marker = L.marker([cafeLat, cafeLng], { icon: cafeIcon }).addTo(map);
+
+              marker.bindPopup(
+                '<b>' + cafe.name + '</b><br/>' +
+                cafe.vicinity + '<br/>' +
+                '<button class="popup-btn" onclick="openCafe(' + index + ')">Open Details</button>' +
+                '<br/>' +
+                '<button class="popup-btn" onclick="openDirections(' + cafeLat + ',' + cafeLng + ')">Directions</button>'
+              );
+            });
+
+            function openDirections(lat, lng) {
+              window.ReactNativeWebView.postMessage(JSON.stringify({
+                type: 'OPEN_DIRECTIONS',
+                latitude: lat,
+                longitude: lng
+              }));
+            }
+
+            function openCafe(index) {
+              window.ReactNativeWebView.postMessage(JSON.stringify({
+                type: 'OPEN_CAFE',
+                cafe: cafes[index]
+              }));
+            }            
+
+            map.on('click', function(e) {
+              window.ReactNativeWebView.postMessage(JSON.stringify({
+                type: 'MAP_CLICK',
+                latitude: e.latlng.lat,
+                longitude: e.latlng.lng
+              }));
+            });
+          </script>
+        </body>
+      </html>
+    `;
+  };
+
+  const handleWebViewMessage = (event) => {
+    try {
+      const data = JSON.parse(event.nativeEvent.data);
+
+      if (data.type === 'OPEN_DIRECTIONS') {
+        const url = `https://www.google.com/maps/dir/?api=1&destination=${data.latitude},${data.longitude}`;
+        Linking.openURL(url);
+      }
+
+      if (data.type === 'OPEN_CAFE') {
+        openCafeDetails(data.cafe);
+      }
+
+      if (data.type === 'MAP_CLICK') {
+        const newLocation = {
+          latitude: data.latitude,
+          longitude: data.longitude,
+        };
+
+        setSelectedLocation(newLocation);
+        setRegion(newLocation);
+        fetchNearbyCafes(data.latitude, data.longitude);
+      }
+    } catch (error) {
+      console.log('WebView message error:', error.message);
     }
   };
 
   if (!region) {
     return (
       <View style={styles.centered}>
-        <Text style={globalStyles.title}>Loading...</Text>
+        <Text style={globalStyles.title}>Finding cafes near you...</Text>
       </View>
     );
   }
 
   return (
-    <View style={styles.map}>
-      <MapView
-        provider={null}
-        ref={mapRef}
+    <View style={styles.container}>
+      <WebView
+        ref={webViewRef}
+        originWhitelist={['*']}
+        source={{ html: generateMapHtml() }}
         style={styles.map}
-        region={region}
-        onPress={(event) => {
-          const { coordinate } = event.nativeEvent;
-          setSelectedLocation(coordinate);
-          fetchNearbyCafes(coordinate.latitude, coordinate.longitude);
-        }}
-        showsUserLocation={true}
-        zoomEnabled={true}
-      >
-        {selectedLocation && (
-          <Marker
-            coordinate={selectedLocation}
-            title="Selected Location"
-            pinColor="blue"
-          />
-        )}
-
-        {cafes.map((cafe) => (
-          <Marker
-            key={cafe.place_id}
-            coordinate={{
-              latitude: cafe.geometry.location.lat,
-              longitude: cafe.geometry.location.lng,
-            }}
-            title={cafe.name}
-            description={cafe.vicinity}
-            image={customMarker}
-            onPress={() => navigation.navigate('CafeDetails', { cafe })}
-          >
-            <Callout
-              onPress={() => navigation.navigate('CafeDetails', { cafe })}
-              tooltip
-            >
-              <View style={styles.calloutContainer}>
-                <Text style={globalStyles.calloutTitle}>{cafe.name}</Text>
-                <Text style={globalStyles.calloutAddress}>{cafe.vicinity}</Text>
-              </View>
-            </Callout>
-          </Marker>
-        ))}
-      </MapView>
+        javaScriptEnabled={true}
+        domStorageEnabled={true}
+        onMessage={handleWebViewMessage}
+      />
 
       {errorMsg && (
         <View style={styles.errorBox}>
@@ -205,24 +289,20 @@ export default function MapScreen({ navigation }) {
         </View>
       )}
 
-      <View style={styles.zoomContainer}>
-        <TouchableOpacity style={globalStyles.zoomButton} onPress={() => zoom('in')}>
-          <Text style={globalStyles.zoomText}>＋</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={globalStyles.zoomButton} onPress={() => zoom('out')}>
-          <Text style={globalStyles.zoomText}>－</Text>
-        </TouchableOpacity>
-      </View>
-
-      {loadingMore && (
-        <ActivityIndicator size="small" color="#0000ff" style={styles.loadingIndicator} />
+      {loading && (
+        <View style={styles.loadingBox}>
+          <ActivityIndicator size="small" color="#0000ff" />
+          <Text style={styles.loadingText}>Loading cafes...</Text>
+        </View>
       )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   map: {
     flex: 1,
   },
@@ -230,26 +310,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  zoomContainer: {
-    position: 'absolute',
-    right: 20,
-    bottom: 100,
-    justifyContent: 'space-between',
-    height: 100,
-  },
-  calloutContainer: {
-    padding: 10,
-    maxWidth: 220,
-    backgroundColor: colors.rosyPink,
-    borderRadius: 12,
-    borderWidth: 0,
-    overflow: 'hidden',
-  },
-  loadingIndicator: {
-    position: 'absolute',
-    bottom: 20,
-    alignSelf: 'center',
   },
   errorBox: {
     position: 'absolute',
@@ -263,5 +323,20 @@ const styles = StyleSheet.create({
   infoText: {
     color: colors.clayRed,
     textAlign: 'center',
+  },
+  loadingBox: {
+    position: 'absolute',
+    bottom: 25,
+    alignSelf: 'center',
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  loadingText: {
+    marginLeft: 8,
+    color: '#333',
   },
 });
