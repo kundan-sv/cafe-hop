@@ -245,7 +245,7 @@ export default function CafeDetailsTabs({
         margin: 0,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
-        height: screenHeight * 0.59,
+        flex: 1,
       }}
     >
       {renderTabs()}

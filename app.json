@@ -17,7 +17,11 @@
       "bundleIdentifier": "com.kundan.cafehop"
     },
     "android": {
-      "package": "com.kundan.cafehop"
+      "package": "com.kundan.cafehop",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#8B5E3C"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
