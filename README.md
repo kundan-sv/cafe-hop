@@ -1,4 +1,12 @@
-# ☕ Cafe Hop
+<p align="center">
+  <img src="assets/icon.png" width="140" />
+</p>
+
+<h1 align="center">Cafe Hop</h1>
+
+<p align="center">
+  Location-based café discovery mobile application built with React Native, Firebase, and OpenStreetMap.
+</p>
 
 Cafe Hop is a location-based mobile application that helps users discover nearby cafés, explore café details, read trusted reviews, and connect with friends through an interactive café discovery experience.
 
